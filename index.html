@@ -35,6 +35,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
     <script>
+      // Prevents FOUC (Flash of Unstyled Content) for theme changes
+      (function() {
+        const theme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (theme === 'dark' || (!theme && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
+      
       tailwind.config = {
         darkMode: 'class',
         theme: {
@@ -94,6 +105,20 @@
       .nav-links-animating li:nth-child(6) { animation-delay: 0.5s; }
       .nav-links-animating li:nth-child(7) { animation-delay: 0.6s; }
       .nav-links-animating li:nth-child(8) { animation-delay: 0.7s; }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto !important;
+        }
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
     </style>
     <!-- Structured Data -->
     <script type="application/ld+json">
