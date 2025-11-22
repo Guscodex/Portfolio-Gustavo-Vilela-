@@ -1,3 +1,4 @@
+
 export const translations = {
   pt: {
     pageTitle: "Gustavo Vilela Santos | Designer & Consultor de Inovação",
@@ -12,7 +13,7 @@ export const translations = {
       langButton: "EN",
     },
     hero: {
-      name: "Gustavo Vilela",
+      name: "Gustavo Vilela Santos",
       headline: "Transformo ideias em experiências que conectam pessoas e negócios",
       description: "Profissional com mais de 4 anos de experiência em Inovação para a Indústria. Focado em metodologias ágeis, facilitação de eventos, desenvolvimento Front-end e UX/UI Design.",
       button1: "Conheça minha trajetória",
@@ -89,9 +90,6 @@ export const translations = {
       linksTitle: "Currículo e Contato",
       linksSubtitle: "Você pode baixar meu currículo completo ou me encontrar nas redes sociais.",
       cvButton: "Baixar Currículo Completo",
-      formSubmitting: "Enviando...",
-      formError: "Ocorreu um erro ao enviar sua mensagem. Por favor, tente novamente.",
-      formResetButton: "Enviar outra mensagem",
     },
     footer: {
       quote: "“Inovar é criar pontes entre o que é possível e o que ainda não existe.”",
@@ -102,6 +100,14 @@ export const translations = {
       accept: "Aceitar",
       decline: "Recusar",
     },
+    accessibility: {
+      title: "Acessibilidade",
+      increaseFont: "Aumentar Fonte",
+      decreaseFont: "Diminuir Fonte",
+      reset: "Resetar",
+      highContrast: "Alto Contraste",
+      toggleMenu: "Menu de Acessibilidade"
+    }
   },
   en: {
     pageTitle: "Gustavo Vilela Santos | Designer & Innovation Consultant",
@@ -193,9 +199,6 @@ export const translations = {
       linksTitle: "Resume and Contact",
       linksSubtitle: "You can download my full resume or find me on social media.",
       cvButton: "Download Full Resume",
-      formSubmitting: "Sending...",
-      formError: "An error occurred while sending your message. Please try again.",
-      formResetButton: "Send another message",
     },
     footer: {
       quote: "“To innovate is to build bridges between what is possible and what does not yet exist.”",
@@ -206,6 +209,14 @@ export const translations = {
       accept: "Accept",
       decline: "Decline",
     },
+    accessibility: {
+      title: "Accessibility",
+      increaseFont: "Increase Font",
+      decreaseFont: "Decrease Font",
+      reset: "Reset",
+      highContrast: "High Contrast",
+      toggleMenu: "Accessibility Menu"
+    }
   },
   es: {
     pageTitle: "Gustavo Vilela Santos | Diseñador y Consultor de Innovación",
@@ -297,9 +308,6 @@ export const translations = {
       linksTitle: "Currículum y Contacto",
       linksSubtitle: "Puedes descargar mi currículum completo o encontrarme en las redes sociales.",
       cvButton: "Descargar Currículum Completo",
-      formSubmitting: "Enviando...",
-      formError: "Ocurrió un error al enviar tu mensaje. Por favor, inténtalo de nuevo.",
-      formResetButton: "Enviar otro mensaje",
     },
     footer: {
       quote: "“Innovar es crear puentes entre lo que es posible y lo que aún no existe.”",
@@ -310,5 +318,13 @@ export const translations = {
       accept: "Aceptar",
       decline: "Rechazar",
     },
+    accessibility: {
+      title: "Accesibilidad",
+      increaseFont: "Aumentar Fuente",
+      decreaseFont: "Disminuir Fuente",
+      reset: "Restablecer",
+      highContrast: "Alto Contraste",
+      toggleMenu: "Menú de Accesibilidad"
+    }
   },
 };

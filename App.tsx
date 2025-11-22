@@ -1,3 +1,4 @@
+
 import React, { useRef, useState, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -9,37 +10,32 @@ import Speaking from './components/Speaking';
 import Gallery from './components/Gallery';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import Loader from './components/Loader';
-import ImageEditor from './components/ImageEditor';
 import { translations } from './translations';
 import CookieConsent from './components/CookieConsent';
+import VLibras from './components/VLibras';
+import AccessibilityWidget from './components/AccessibilityWidget';
+import RevealOnScroll from './components/RevealOnScroll';
+import BackToTop from './components/BackToTop';
 
 type Language = 'pt' | 'en' | 'es';
 type Theme = 'light' | 'dark';
 
 const App: React.FC = () => {
   const [lang, setLang] = useState<Language>('pt');
-  const [isLoading, setIsLoading] = useState(true);
+  // isLoading removed for better performance perception (LCP)
   const [theme, setTheme] = useState<Theme>(() => {
     const savedTheme = localStorage.getItem('theme');
+    const userPrefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
     if (savedTheme && ["light", "dark"].includes(savedTheme)) {
       return savedTheme as Theme;
     }
-    return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    return userPrefersDark ? 'dark' : 'light';
   });
   const [showCookieConsent, setShowCookieConsent] = useState(false);
 
   const t = translations[lang];
   const languages: Language[] = ['pt', 'en', 'es'];
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, []);
-  
   useEffect(() => {
     const consent = localStorage.getItem('cookie_consent');
     if (consent === null) {
@@ -63,7 +59,6 @@ const App: React.FC = () => {
   const aboutRef = useRef<HTMLElement>(null);
   const trajectoryRef = useRef<HTMLElement>(null);
   const projectsRef = useRef<HTMLElement>(null);
-  const imageEditorRef = useRef<HTMLElement>(null);
   const galleryRef = useRef<HTMLElement>(null);
   const contactRef = useRef<HTMLElement>(null);
 
@@ -87,47 +82,82 @@ const App: React.FC = () => {
 
   return (
     <>
-      <Loader isLoading={isLoading} />
-      <div 
-        className={`
-          bg-neutral-light dark:bg-neutral-dark min-h-screen 
-          transition-opacity duration-700 ease-in-out ${isLoading ? 'opacity-0' : 'opacity-100'}
-        `}
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-6 focus:py-3 focus:bg-brand-blue focus:text-white focus:rounded-md focus:font-bold"
       >
-        <div className={isLoading ? 'invisible' : 'visible'}>
-          <Header 
-            t={t.header}
-            lang={lang}
-            theme={theme}
-            onCycleLang={cycleLang}
-            onToggleTheme={toggleTheme}
+        Skip to content
+      </a>
+      
+      {/* Accessibility Tools */}
+      <VLibras />
+      <AccessibilityWidget t={t.accessibility} />
+      <BackToTop />
+
+      <div className="bg-neutral-light dark:bg-neutral-dark min-h-screen">
+        <Header 
+          t={t.header}
+          lang={lang}
+          theme={theme}
+          onCycleLang={cycleLang}
+          onToggleTheme={toggleTheme}
+          onNavigate={{
+            about: () => scrollTo(aboutRef),
+            trajectory: () => scrollTo(trajectoryRef),
+            projects: () => scrollTo(projectsRef),
+            gallery: () => scrollTo(galleryRef),
+            contact: () => scrollTo(contactRef)
+          }} 
+        />
+        
+        <main id="main-content" className="overflow-hidden">
+          <Hero 
+            t={t.hero}
             onNavigate={{
-              about: () => scrollTo(aboutRef),
               trajectory: () => scrollTo(trajectoryRef),
               projects: () => scrollTo(projectsRef),
-              imageEditor: () => scrollTo(imageEditorRef),
-              gallery: () => scrollTo(galleryRef),
-              contact: () => scrollTo(contactRef)
-            }} 
-          />
-          <main>
-            <Hero 
-              t={t.hero}
-              onNavigate={{
-                trajectory: () => scrollTo(trajectoryRef),
-                projects: () => scrollTo(projectsRef),
-            }} />
-            <About ref={aboutRef} t={t.about}/>
-            <Trajectory ref={trajectoryRef} t={t.trajectory} />
-            <Projects ref={projectsRef} t={t.projects} />
+          }} />
+
+          <div ref={aboutRef as React.RefObject<HTMLDivElement>}>
+            <RevealOnScroll>
+              <About t={t.about}/>
+            </RevealOnScroll>
+          </div>
+
+          <div ref={trajectoryRef as React.RefObject<HTMLDivElement>}>
+            <RevealOnScroll delay={100}>
+              <Trajectory t={t.trajectory} />
+            </RevealOnScroll>
+          </div>
+
+          <div ref={projectsRef as React.RefObject<HTMLDivElement>}>
+            <RevealOnScroll>
+              <Projects t={t.projects} />
+            </RevealOnScroll>
+          </div>
+
+          <RevealOnScroll>
             <Skills t={t.skills} />
+          </RevealOnScroll>
+
+          <RevealOnScroll delay={100}>
             <Speaking t={t.speaking} />
-            <ImageEditor ref={imageEditorRef} t={t.imageEditor} />
-            <Gallery ref={galleryRef} t={t.gallery}/>
-            <Contact ref={contactRef} t={t.contact}/>
-          </main>
-          <Footer t={t.footer} />
-        </div>
+          </RevealOnScroll>
+
+          <div ref={galleryRef as React.RefObject<HTMLDivElement>}>
+            <RevealOnScroll>
+              <Gallery t={t.gallery}/>
+            </RevealOnScroll>
+          </div>
+
+          <div ref={contactRef as React.RefObject<HTMLDivElement>}>
+            <RevealOnScroll>
+              <Contact t={t.contact}/>
+            </RevealOnScroll>
+          </div>
+        </main>
+        
+        <Footer t={t.footer} />
       </div>
       {showCookieConsent && <CookieConsent t={t.cookieConsent} onConsent={handleConsent} />}
     </>

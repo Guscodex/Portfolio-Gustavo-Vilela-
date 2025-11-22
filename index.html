@@ -1,10 +1,12 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gustavo Vilela Santos|Designer & Consultor de Inovação</title>
+    <meta name="theme-color" content="#2563eb">
+    <title>Gustavo Vilela Santos | Designer & Consultor de Inovação</title>
     
     <!-- SEO Meta Tags -->
     <meta name="description" content="Portfólio de Gustavo Vilela Santos (Gus), Designer, Consultor de Inovação e Desenvolvedor de Negócios. Explore meus projetos em inovação aberta, UX/UI e desenvolvimento front-end.">
@@ -19,7 +21,7 @@
     <meta property="og:url" content="https://www.gustavovilela.com/">
     <meta property="og:title" content="Gustavo Vilela Santos | Designer & Consultor de Inovação">
     <meta property="og:description" content="Portfólio de Gustavo Vilela Santos (Gus), especialista em transformar ideias em experiências de impacto.">
-    <meta property="og:image" content="https://picsum.photos/seed/gus-profile/1200/630">
+    <meta property="og:image" content="/images/social-share.jpg">
     <meta property="og:locale" content="pt_BR">
     <meta property="og:locale:alternate" content="en_US">
     
@@ -28,24 +30,13 @@
     <meta property="twitter:url" content="https://www.gustavovilela.com/">
     <meta property="twitter:title" content="Gustavo Vilela Santos | Designer & Consultor de Inovação">
     <meta property="twitter:description" content="Portfólio de Gustavo Vilela Santos (Gus), especialista em transformar ideias em experiências de impacto.">
-    <meta property="twitter:image" content="https://picsum.photos/seed/gus-profile/1200/630">
+    <meta property="twitter:image" content="/images/social-share.jpg">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <script>
-      // Prevents FOUC (Flash of Unstyled Content) for theme changes
-      (function() {
-        const theme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (theme === 'dark' || (!theme && prefersDark)) {
-          document.documentElement.classList.add('dark');
-        } else {
-          document.documentElement.classList.remove('dark');
-        }
-      })();
-      
       tailwind.config = {
         darkMode: 'class',
         theme: {
@@ -56,9 +47,25 @@
             colors: {
               'brand-blue': '#2563eb', // Royal Blue
               'brand-orange': '#f97316', // Orange
-              'neutral-dark': '#111827',
-              'neutral-medium': '#6b7280',
-              'neutral-light': '#f3f4f6',
+              'neutral-dark': '#0f172a', // Darker slate for more premium feel
+              'neutral-medium': '#64748b',
+              'neutral-light': '#f8fafc',
+            },
+            animation: {
+              'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.2, 1, 0.8, 1) forwards',
+              'blob': 'blob 7s infinite',
+            },
+            keyframes: {
+              fadeInUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              blob: {
+                '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                '100%': { transform: 'translate(0px, 0px) scale(1)' },
+              }
             }
           }
         }
@@ -67,12 +74,20 @@
     <style>
       :root {
         --header-bg-scrolled: rgba(255, 255, 255, 0.8);
-        --header-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        --header-backdrop-blur: 4px;
+        --header-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        --header-backdrop-blur: 12px;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        overflow-x: hidden;
       }
 
       html.dark {
-        --header-bg-scrolled: rgba(17, 24, 39, 0.8);
+        --header-bg-scrolled: rgba(15, 23, 42, 0.8);
       }
 
       .header-scrolled {
@@ -80,44 +95,87 @@
         box-shadow: var(--header-shadow);
         -webkit-backdrop-filter: blur(var(--header-backdrop-blur));
         backdrop-filter: blur(var(--header-backdrop-blur));
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       }
 
-      @keyframes navLinkFadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(-10px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .nav-links-animating li {
-        animation: navLinkFadeIn 0.5s ease forwards;
+      /* Background Patterns for Clean Design */
+      .bg-grid-pattern {
+        background-size: 40px 40px;
+        background-image: radial-gradient(circle, #cbd5e1 1px, transparent 1px);
       }
       
-      .nav-links-animating li:nth-child(1) { animation-delay: 0.0s; }
-      .nav-links-animating li:nth-child(2) { animation-delay: 0.1s; }
-      .nav-links-animating li:nth-child(3) { animation-delay: 0.2s; }
-      .nav-links-animating li:nth-child(4) { animation-delay: 0.3s; }
-      .nav-links-animating li:nth-child(5) { animation-delay: 0.4s; }
-      .nav-links-animating li:nth-child(6) { animation-delay: 0.5s; }
-      .nav-links-animating li:nth-child(7) { animation-delay: 0.6s; }
-      .nav-links-animating li:nth-child(8) { animation-delay: 0.7s; }
+      html.dark .bg-grid-pattern {
+        background-image: radial-gradient(circle, #334155 1px, transparent 1px);
+      }
 
-      @media (prefers-reduced-motion: reduce) {
-        html {
-          scroll-behavior: auto !important;
-        }
-        *,
-        *::before,
-        *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-          scroll-behavior: auto !important;
-        }
+      .bg-noise {
+        position: relative;
+      }
+      
+      .bg-noise::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* Accessibility Focus Styles */
+      *:focus-visible {
+        outline: 2px solid #2563eb;
+        outline-offset: 4px;
+      }
+
+      /* High Contrast Mode Styles */
+      html.high-contrast {
+        filter: contrast(130%);
+      }
+      
+      html.high-contrast body {
+        background-color: #000000 !important;
+        color: #FFFF00 !important;
+      }
+
+      html.high-contrast *:not([data-no-contrast] *):not([vw] *) {
+        background-color: #000000 !important;
+        color: #FFFF00 !important;
+        border-color: #FFFF00 !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+      }
+
+      html.high-contrast a:not([data-no-contrast] *):not([vw] *), 
+      html.high-contrast button:not([data-no-contrast] *):not([vw] *) {
+        color: #00FFFF !important;
+        text-decoration: underline;
+        border: 2px solid #00FFFF !important;
+      }
+      
+      html.high-contrast a:hover:not([data-no-contrast] *):not([vw] *),
+      html.high-contrast button:hover:not([data-no-contrast] *):not([vw] *) {
+        background-color: #00FFFF !important;
+        color: #000000 !important;
+      }
+
+      html.high-contrast img:not([vw] *), 
+      html.high-contrast video:not([vw] *) {
+        filter: grayscale(100%) contrast(150%);
+        opacity: 0.8;
+      }
+
+      html.high-contrast svg:not([vw] *) {
+         stroke: #FFFF00 !important;
+         fill: #FFFF00 !important;
+      }
+      
+      html.high-contrast [vw], html.high-contrast [vw] * {
+         background-color: transparent !important;
+         filter: none !important;
+         border-color: transparent !important;
       }
     </style>
     <!-- Structured Data -->
@@ -128,7 +186,7 @@
       "name": "Gustavo Vilela Santos",
       "alternateName": "Gus",
       "url": "https://www.gustavovilela.com/",
-      "image": "https://picsum.photos/seed/gus-profile/800/800",
+      "image": "https://www.gustavovilela.com/images/profile.jpg",
       "sameAs": [
         "https://www.linkedin.com/in/gustavovsantos/",
         "https://www.instagram.com/ogustavovilella/"
@@ -162,7 +220,7 @@
 }
 </script>
 </head>
-  <body class="bg-white text-neutral-dark">
+  <body class="bg-neutral-50 dark:bg-gray-950 text-neutral-dark antialiased overflow-x-hidden">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>

@@ -1,124 +1,111 @@
 
 # Documentação do Projeto: Portfólio Gustavo Vilela Santos
 
-Este documento fornece um guia completo para configurar, executar e implantar o site do portfólio localmente e em um ambiente de produção (homologação).
+Este documento fornece um guia completo para a estrutura, funcionalidades e execução do site de portfólio pessoal de Gustavo Vilela Santos.
 
 ---
 
 ## 1. Visão Geral do Projeto
 
-Este é um site de portfólio pessoal para Gustavo Vilela Santos, desenvolvido como uma aplicação de página única (SPA) usando React e TypeScript, com estilização via Tailwind CSS. O projeto é totalmente estático, o que significa que não requer um backend complexo para ser executado.
+Este projeto é uma **Single Page Application (SPA)** desenvolvida com **React 18** e **TypeScript**, utilizando **Tailwind CSS** para estilização. 
 
-**Principais Características:**
-- **Multi-idioma:** Suporte dinâmico para Português (pt), Inglês (en) e Espanhol (es).
-- **Tema Dark/Light:** Alternância de tema claro e escuro com persistência da preferência do usuário.
-- **Responsivo:** Design adaptável para desktops, tablets e dispositivos móveis.
-- **Componentizado:** Estrutura organizada em componentes React reutilizáveis.
-- **Otimizado para SEO:** Inclui meta tags, dados estruturados (Schema.org) e Open Graph para melhor indexação e compartilhamento em redes sociais.
+**Destaques Técnicos:**
+- **Acessibilidade First (A11y):** Projetado para conformidade WCAG, incluindo widget de VLibras, controle de contraste/fonte e navegação por teclado.
+- **Alta Performance:** Otimizado para Core Web Vitals (Lighthouse 90+), com carregamento lazy de imagens e animações leves via CSS/IntersectionObserver.
+- **Sem Build Complexo:** Utiliza *Import Maps* e módulos ES6, rodando diretamente no navegador sem necessidade de transpiladores pesados (Webpack/Vite) para desenvolvimento simples.
+- **Design Moderno:** Estética "Clean Premium" com gradientes mesh, texturas de ruído e padrões de grid.
 
 ---
 
-## 2. Configuração do Ambiente de Desenvolvimento (Local)
+## 2. Funcionalidades Implementadas
 
-Siga estes passos para executar o projeto em sua máquina local.
+### Acessibilidade
+1.  **Menu de Acessibilidade:** Widget flutuante (canto inferior esquerdo) que permite:
+    - Aumentar/Diminuir tamanho da fonte.
+    - Alternar para Modo de Alto Contraste (Fundo preto, texto amarelo/ciano).
+2.  **VLibras:** Integração com o widget governamental de tradução para Língua Brasileira de Sinais.
+3.  **Navegação:** Link "Skip to Content" oculto para leitores de tela e foco visível (`outline`) em todos os elementos interativos.
+4.  **Semântica:** Uso correto de tags HTML5 (`<main>`, `<nav>`, `<section>`, `<h1>`-`<h3>`) e atributos ARIA.
+
+### UI/UX
+1.  **Tema Dark/Light:** Detecção automática da preferência do sistema e botão de alternância manual.
+2.  **Internacionalização (i18n):** Suporte completo a Português (PT), Inglês (EN) e Espanhol (ES).
+3.  **Scroll Reveal:** Componente personalizado `RevealOnScroll` que anima elementos suavemente quando entram na viewport.
+4.  **Back to Top:** Botão flutuante que aparece após rolar a página.
+
+---
+
+## 3. Estrutura de Arquivos
+
+A estrutura do projeto foi organizada para facilitar a manutenção e escalabilidade:
+
+```
+/
+|-- images/                   # [IMPORTANTE] Pasta contendo todas as imagens do site (profile.jpg, etc)
+|-- components/               # Componentes React modulares
+|   |-- AccessibilityWidget.tsx # Menu flutuante de controle de fonte/contraste
+|   |-- About.tsx             # Seção Sobre Mim
+|   |-- BackToTop.tsx         # Botão de voltar ao topo
+|   |-- Contact.tsx           # Formulário de contato e redes sociais
+|   |-- CookieConsent.tsx     # Banner de consentimento LGPD
+|   |-- Footer.tsx            # Rodapé
+|   |-- Gallery.tsx           # Galeria de imagens (estilo Instagram)
+|   |-- Header.tsx            # Menu de navegação responsivo
+|   |-- Hero.tsx              # Seção principal com animações de entrada
+|   |-- Projects.tsx          # Grid de projetos
+|   |-- RevealOnScroll.tsx    # Wrapper para animações de scroll
+|   |-- Skills.tsx            # Lista de competências técnicas
+|   |-- Speaking.tsx          # Seção de palestras e depoimentos
+|   |-- Timeline.tsx          # Componente reutilizável para trajetórias
+|   |-- Trajectory.tsx        # Seção de trajetória profissional e acadêmica
+|   `-- VLibras.tsx           # Integração do plugin VLibras
+|-- App.tsx                   # Componente raiz que orquestra a aplicação
+|-- constants.tsx             # Dados estáticos (textos de projetos, ícones SVG, configurações)
+|-- index.html                # Arquivo base HTML (contém estilos globais e meta tags)
+|-- index.tsx                 # Ponto de entrada React
+|-- metadata.json             # Metadados do projeto
+|-- translations.ts           # Arquivo de dicionário para traduções (PT/EN/ES)
+`-- types.ts                  # Definições de interfaces TypeScript
+```
+
+---
+
+## 4. Guia de Configuração e Execução
 
 ### Pré-requisitos
+- **Imagens:** Certifique-se de que a pasta `/images` existe na raiz e contém os arquivos referenciados em `constants.tsx` (ex: `project-saga.jpg`, `profile.jpg`).
 
-- **Node.js e npm:** Essencial para gerenciar as dependências do projeto. Você pode baixá-los em [nodejs.org](https://nodejs.org/).
-- **Um Servidor Web Local (Recomendado):** Como o projeto utiliza módulos ES6 (`import`/`export`), abri-lo diretamente do sistema de arquivos (`file://...`) pode causar problemas de CORS. É recomendado usar um servidor local simples.
+### Executando Localmente
+Como o projeto usa módulos ES6 nativos via navegador, você precisa de um servidor HTTP simples para evitar bloqueios de CORS (Cross-Origin Resource Sharing).
 
-### Passos de Instalação via CMD (Prompt de Comando)
-
-1.  **Clone o Repositório:**
-    Abra o CMD e navegue até o diretório onde deseja salvar o projeto. Em seguida, clone o repositório do projeto. (Nota: Se você recebeu os arquivos diretamente, pule este passo e vá para o passo 2).
-    ```bash
-    git clone <URL_DO_REPOSITORIO>
-    cd nome-do-diretorio-do-projeto
-    ```
-
-2.  **Crie a Estrutura de Arquivos:**
-    Certifique-se de que todos os arquivos do projeto (`index.html`, `index.tsx`, `App.tsx`, `translations.ts`, etc.) estão na mesma estrutura de diretórios fornecida.
-
-3.  **Instale um Servidor Local:**
-    Se você não tiver um servidor local, pode instalar um facilmente via npm. O `serve` é uma ótima opção.
+1.  **Instale um servidor simples (se necessário):**
     ```bash
     npm install -g serve
     ```
 
-4.  **Inicie o Servidor Local:**
-    Ainda no diretório raiz do projeto (onde o `index.html` está localizado), execute o seguinte comando:
+2.  **Inicie o servidor na pasta do projeto:**
     ```bash
     serve .
     ```
-    O CMD exibirá um endereço local, geralmente `http://localhost:3000`.
+    Ou use a extensão "Live Server" do VS Code.
 
-5.  **Acesse o Site:**
-    Abra seu navegador (Google Chrome, Firefox, etc.) e acesse o endereço fornecido pelo servidor (ex: `http://localhost:3000`). O site do portfólio deve carregar.
-
----
-
-## 3. Estrutura do Projeto
-
-```
-/
-|-- components/               # Componentes React reutilizáveis
-|   |-- About.tsx
-|   |-- Contact.tsx
-|   |-- Footer.tsx
-|   |-- Gallery.tsx
-|   |-- Header.tsx
-|   |-- Hero.tsx
-|   |-- Projects.tsx
-|   |-- Skills.tsx
-|   |-- Speaking.tsx
-|   |-- Timeline.tsx
-|   `-- Trajectory.tsx
-|-- App.tsx                   # Componente principal que organiza a página
-|-- constants.tsx             # Constantes e dados estáticos (projetos, habilidades, etc.)
-|-- index.html                # Ponto de entrada HTML da aplicação
-|-- index.tsx                 # Script que renderiza a aplicação React na DOM
-|-- metadata.json             # Metadados do projeto
-|-- translations.ts           # Arquivo com todas as traduções (pt, en, es)
-`-- types.ts                  # Definições de tipos TypeScript
-```
+3.  **Acesse:**
+    Abra `http://localhost:3000` (ou a porta indicada) no seu navegador.
 
 ---
 
-## 4. Homologação e Implantação (Deploy)
+## 5. Personalização
 
-Como este é um projeto totalmente estático, o processo de implantação é muito simples. Não há necessidade de um "build" ou compilação. Você só precisa hospedar os arquivos existentes.
+### Adicionando Novos Projetos
+Edite o arquivo `constants.tsx`. Procure pela função `getProjects` e adicione um novo objeto ao array:
 
-### O que é um Site Estático?
-Significa que o site é composto apenas por arquivos HTML, CSS, JavaScript e imagens. Quando um usuário acessa o site, o servidor simplesmente envia esses arquivos como estão. Isso torna a hospedagem mais barata, rápida e segura.
-
-### Opções de Hospedagem
-
-Você pode usar qualquer serviço que hospede arquivos estáticos. Algumas opções populares e gratuitas são:
-
-- **Vercel:** Ótimo para projetos React. Conecte seu repositório Git e ele fará o deploy automaticamente a cada atualização.
-- **Netlify:** Similar ao Vercel, com um processo de deploy contínuo muito simples.
-- **GitHub Pages:** Permite hospedar sites diretamente de um repositório no GitHub.
-- **Hospedagem Web Tradicional (cPanel):** Se você tem um plano de hospedagem tradicional, basta usar o Gerenciador de Arquivos ou um cliente FTP (como o FileZilla) para enviar todos os arquivos do projeto para a pasta raiz do seu site (geralmente `public_html`).
-
-### Passos para a Implantação (Exemplo com cPanel)
-
-1.  **Prepare os Arquivos:**
-    Junte todos os arquivos e pastas do projeto em um único local.
-
-2.  **Acesse sua Hospedagem:**
-    Faça login no painel de controle da sua hospedagem (ex: cPanel).
-
-3.  **Abra o Gerenciador de Arquivos:**
-    Navegue até o "File Manager" ou "Gerenciador de Arquivos".
-
-4.  **Vá para a Pasta Raiz:**
-    Entre no diretório `public_html` (ou o diretório raiz do domínio onde você quer implantar o site).
-
-5.  **Faça o Upload dos Arquivos:**
-    Use a função "Upload" para enviar todos os arquivos e pastas do projeto para este diretório. Certifique-se de manter a mesma estrutura de pastas (`components/`, etc.).
-
-6.  **Verifique:**
-    Acesse o seu domínio no navegador. O site deve estar funcionando. Se você encontrar uma página de erro 404, verifique se o arquivo `index.html` está na pasta raiz correta.
-
-Pronto! Seu site está no ar e acessível publicamente.
-    
+```typescript
+{
+  image: "/images/novo-projeto.jpg",
+  title: "Nome do Projeto", // Ou t.projectList[x].title para tradução
+  description: "Descrição...",
+  tags: ["Tag 1", "Tag 2"],
+  link: "https://..."
+}
+```
+*Lembre-se de adicionar as chaves de tradução correspondentes em `translations.ts
