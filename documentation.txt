@@ -1,111 +1,310 @@
 
-# Documentação do Projeto: Portfólio Gustavo Vilela Santos
+# Documentação Técnica: Portfólio Gustavo Vilela Santos
+**Guia de Instalação e Configuração do Zero (Ambiente Local)**
 
-Este documento fornece um guia completo para a estrutura, funcionalidades e execução do site de portfólio pessoal de Gustavo Vilela Santos.
-
----
-
-## 1. Visão Geral do Projeto
-
-Este projeto é uma **Single Page Application (SPA)** desenvolvida com **React 18** e **TypeScript**, utilizando **Tailwind CSS** para estilização. 
-
-**Destaques Técnicos:**
-- **Acessibilidade First (A11y):** Projetado para conformidade WCAG, incluindo widget de VLibras, controle de contraste/fonte e navegação por teclado.
-- **Alta Performance:** Otimizado para Core Web Vitals (Lighthouse 90+), com carregamento lazy de imagens e animações leves via CSS/IntersectionObserver.
-- **Sem Build Complexo:** Utiliza *Import Maps* e módulos ES6, rodando diretamente no navegador sem necessidade de transpiladores pesados (Webpack/Vite) para desenvolvimento simples.
-- **Design Moderno:** Estética "Clean Premium" com gradientes mesh, texturas de ruído e padrões de grid.
+Este documento serve como guia definitivo para desenvolvedores que desejam configurar o ambiente de desenvolvimento localmente, migrando da versão de protótipo (CDN) para uma estrutura profissional de build.
 
 ---
 
-## 2. Funcionalidades Implementadas
+## 1. Stack Tecnológica
 
-### Acessibilidade
-1.  **Menu de Acessibilidade:** Widget flutuante (canto inferior esquerdo) que permite:
-    - Aumentar/Diminuir tamanho da fonte.
-    - Alternar para Modo de Alto Contraste (Fundo preto, texto amarelo/ciano).
-2.  **VLibras:** Integração com o widget governamental de tradução para Língua Brasileira de Sinais.
-3.  **Navegação:** Link "Skip to Content" oculto para leitores de tela e foco visível (`outline`) em todos os elementos interativos.
-4.  **Semântica:** Uso correto de tags HTML5 (`<main>`, `<nav>`, `<section>`, `<h1>`-`<h3>`) e atributos ARIA.
-
-### UI/UX
-1.  **Tema Dark/Light:** Detecção automática da preferência do sistema e botão de alternância manual.
-2.  **Internacionalização (i18n):** Suporte completo a Português (PT), Inglês (EN) e Espanhol (ES).
-3.  **Scroll Reveal:** Componente personalizado `RevealOnScroll` que anima elementos suavemente quando entram na viewport.
-4.  **Back to Top:** Botão flutuante que aparece após rolar a página.
+*   **Runtime:** Node.js (v18+)
+*   **Framework/Build Tool:** Vite (React + SWC)
+*   **Linguagem:** TypeScript
+*   **Estilização:** Tailwind CSS (PostCSS)
+*   **IA:** Google GenAI SDK (`@google/genai`)
 
 ---
 
-## 3. Estrutura de Arquivos
+## 2. Pré-requisitos
 
-A estrutura do projeto foi organizada para facilitar a manutenção e escalabilidade:
+Antes de iniciar, certifique-se de ter instalado:
+1.  **Node.js** (Versão LTS recomendada): [Baixar Node.js](https://nodejs.org/)
+2.  **Gerenciador de pacotes:** npm (vem com o Node), yarn ou pnpm.
+3.  **Editor de Código:** VS Code (recomendado).
 
-```
-/
-|-- images/                   # [IMPORTANTE] Pasta contendo todas as imagens do site (profile.jpg, etc)
-|-- components/               # Componentes React modulares
-|   |-- AccessibilityWidget.tsx # Menu flutuante de controle de fonte/contraste
-|   |-- About.tsx             # Seção Sobre Mim
-|   |-- BackToTop.tsx         # Botão de voltar ao topo
-|   |-- Contact.tsx           # Formulário de contato e redes sociais
-|   |-- CookieConsent.tsx     # Banner de consentimento LGPD
-|   |-- Footer.tsx            # Rodapé
-|   |-- Gallery.tsx           # Galeria de imagens (estilo Instagram)
-|   |-- Header.tsx            # Menu de navegação responsivo
-|   |-- Hero.tsx              # Seção principal com animações de entrada
-|   |-- Projects.tsx          # Grid de projetos
-|   |-- RevealOnScroll.tsx    # Wrapper para animações de scroll
-|   |-- Skills.tsx            # Lista de competências técnicas
-|   |-- Speaking.tsx          # Seção de palestras e depoimentos
-|   |-- Timeline.tsx          # Componente reutilizável para trajetórias
-|   |-- Trajectory.tsx        # Seção de trajetória profissional e acadêmica
-|   `-- VLibras.tsx           # Integração do plugin VLibras
-|-- App.tsx                   # Componente raiz que orquestra a aplicação
-|-- constants.tsx             # Dados estáticos (textos de projetos, ícones SVG, configurações)
-|-- index.html                # Arquivo base HTML (contém estilos globais e meta tags)
-|-- index.tsx                 # Ponto de entrada React
-|-- metadata.json             # Metadados do projeto
-|-- translations.ts           # Arquivo de dicionário para traduções (PT/EN/ES)
-`-- types.ts                  # Definições de interfaces TypeScript
+---
+
+## 3. Instalação Passo a Passo
+
+### Passo 1: Criar o Projeto (Scaffolding)
+Abra seu terminal na pasta onde deseja criar o projeto e execute:
+
+```bash
+npm create vite@latest portfolio-gustavo -- --template react-swc-ts
+cd portfolio-gustavo
 ```
 
----
+### Passo 2: Instalar Dependências
+Instale as bibliotecas utilizadas no código:
 
-## 4. Guia de Configuração e Execução
+```bash
+# Dependências principais
+npm install @google/genai
 
-### Pré-requisitos
-- **Imagens:** Certifique-se de que a pasta `/images` existe na raiz e contém os arquivos referenciados em `constants.tsx` (ex: `project-saga.jpg`, `profile.jpg`).
+# Dependências de desenvolvimento (Tailwind e Tipos)
+docker run -it --rm --entrypoint sh node:24-alpine
+```
 
-### Executando Localmente
-Como o projeto usa módulos ES6 nativos via navegador, você precisa de um servidor HTTP simples para evitar bloqueios de CORS (Cross-Origin Resource Sharing).
+### Passo 3: Configurar Tailwind CSS
+Inicialize o arquivo de configuração do Tailwind:
 
-1.  **Instale um servidor simples (se necessário):**
-    ```bash
-    npm install -g serve
-    ```
+```bash
+npx tailwindcss init -p
+```
 
-2.  **Inicie o servidor na pasta do projeto:**
-    ```bash
-    serve .
-    ```
-    Ou use a extensão "Live Server" do VS Code.
+Isso criará os arquivos `tailwind.config.js` e `postcss.config.js`.
 
-3.  **Acesse:**
-    Abra `http://localhost:3000` (ou a porta indicada) no seu navegador.
+**1. Edite o `tailwind.config.js`:**
+Substitua o conteúdo pelo seguinte para corresponder ao design system do projeto:
 
----
-
-## 5. Personalização
-
-### Adicionando Novos Projetos
-Edite o arquivo `constants.tsx`. Procure pela função `getProjects` e adicione um novo objeto ao array:
-
-```typescript
-{
-  image: "/images/novo-projeto.jpg",
-  title: "Nome do Projeto", // Ou t.projectList[x].title para tradução
-  description: "Descrição...",
-  tags: ["Tag 1", "Tag 2"],
-  link: "https://..."
+```javascript
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+      },
+      colors: {
+        'brand-blue': '#2563eb',
+        'brand-orange': '#f97316',
+        'neutral-dark': '#0f172a',
+        'neutral-medium': '#64748b',
+        'neutral-light': '#f8fafc',
+      },
+      animation: {
+        'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.2, 1, 0.8, 1) forwards',
+        'blob': 'blob 7s infinite',
+      },
+      keyframes: {
+        fadeInUp: {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        blob: {
+          '0%': { transform: 'translate(0px, 0px) scale(1)' },
+          '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+          '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+          '100%': { transform: 'translate(0px, 0px) scale(1)' },
+        }
+      }
+    },
+  },
+  plugins: [],
 }
 ```
-*Lembre-se de adicionar as chaves de tradução correspondentes em `translations.ts
+
+**2. Adicione as diretivas CSS:**
+Limpe o arquivo `src/index.css` e adicione:
+
+```css
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Estilos Globais e Customizações */
+:root {
+  --header-bg-scrolled: rgba(255, 255, 255, 0.8);
+  --header-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  --header-backdrop-blur: 12px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+html.dark {
+  --header-bg-scrolled: rgba(15, 23, 42, 0.8);
+}
+
+.header-scrolled {
+  background-color: var(--header-bg-scrolled);
+  box-shadow: var(--header-shadow);
+  -webkit-backdrop-filter: blur(var(--header-backdrop-blur));
+  backdrop-filter: blur(var(--header-backdrop-blur));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Padrões de Fundo */
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image: radial-gradient(circle, #cbd5e1 1px, transparent 1px);
+}
+
+html.dark .bg-grid-pattern {
+  background-image: radial-gradient(circle, #334155 1px, transparent 1px);
+}
+
+.bg-noise {
+  position: relative;
+}
+
+.bg-noise::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Acessibilidade */
+*:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 4px;
+}
+
+/* Alto Contraste */
+html.high-contrast {
+  filter: contrast(130%);
+}
+
+html.high-contrast body {
+  background-color: #000000 !important;
+  color: #FFFF00 !important;
+}
+
+html.high-contrast *:not([data-no-contrast] *):not([vw] *) {
+  background-color: #000000 !important;
+  color: #FFFF00 !important;
+  border-color: #FFFF00 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+html.high-contrast a:not([data-no-contrast] *):not([vw] *), 
+html.high-contrast button:not([data-no-contrast] *):not([vw] *) {
+  color: #00FFFF !important;
+  text-decoration: underline;
+  border: 2px solid #00FFFF !important;
+}
+
+html.high-contrast a:hover:not([data-no-contrast] *):not([vw] *),
+html.high-contrast button:hover:not([data-no-contrast] *):not([vw] *) {
+  background-color: #00FFFF !important;
+  color: #000000 !important;
+}
+
+html.high-contrast img:not([vw] *), 
+html.high-contrast video:not([vw] *) {
+  filter: grayscale(100%) contrast(150%);
+  opacity: 0.8;
+}
+
+html.high-contrast svg:not([vw] *) {
+   stroke: #FFFF00 !important;
+   fill: #FFFF00 !important;
+}
+
+html.high-contrast [vw], html.high-contrast [vw] * {
+   background-color: transparent !important;
+   filter: none !important;
+   border-color: transparent !important;
+}
+```
+
+---
+
+## 4. Migração de Arquivos e Estrutura
+
+A estrutura de pastas no Vite deve ficar assim. Mova os arquivos do código atual para os locais indicados:
+
+```
+portfolio-gustavo/
+├── public/
+│   ├── favicon.svg
+│   ├── gustavo_vilela_santos_cv.pdf
+│   └── images/                  <-- Mover pasta 'images' inteira para cá
+│       ├── profile.jpg
+│       ├── project-saga.jpg
+│       └── ...
+├── src/
+│   ├── components/              <-- Mover pasta 'components' para cá
+│   │   ├── Header.tsx
+│   │   ├── Hero.tsx
+│   │   └── ...
+│   ├── App.tsx                  <-- Mover App.tsx para cá
+│   ├── constants.tsx            <-- Mover constants.tsx para cá
+│   ├── translations.ts          <-- Mover translations.ts para cá
+│   ├── types.ts                 <-- Mover types.ts para cá
+│   ├── index.css                <-- Arquivo CSS criado acima
+│   ├── main.tsx                 <-- Vite cria este arquivo (substituto do index.tsx)
+│   └── vite-env.d.ts
+├── index.html                   <-- Na raiz
+├── package.json
+├── tailwind.config.js
+└── vite.config.ts
+```
+
+**Atenção ao `main.tsx`:**
+O arquivo `index.tsx` original deve ser adaptado para o padrão do Vite (geralmente chamado de `main.tsx`):
+
+```tsx
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App'
+import './index.css' // Importante importar o CSS do Tailwind
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+)
+```
+
+---
+
+## 5. Configuração de Variáveis de Ambiente (Google Gemini)
+
+1.  Crie um arquivo `.env` na raiz do projeto.
+2.  Adicione sua chave de API:
+
+```env
+VITE_API_KEY=sua_chave_api_aqui
+```
+*Nota: No Vite, variáveis de ambiente devem começar com `VITE_` para serem expostas ao frontend.*
+
+3.  Atualize o código em `components/ImageEditor.tsx` (se existir) para usar `import.meta.env.VITE_API_KEY` em vez de `process.env.API_KEY`.
+
+---
+
+## 6. Executando o Projeto
+
+### Desenvolvimento Local
+Para rodar o servidor local com Hot Reload:
+
+```bash
+npm run dev
+```
+Acesse o link fornecido no terminal (ex: `http://localhost:5173`).
+
+### Build para Produção
+Para gerar a versão otimizada para deploy:
+
+```bash
+npm run build
+```
+Isso criará uma pasta `dist/` com os arquivos estáticos prontos para upload.
+
+---
+
+## 7. Deploy
+
+Este projeto pode ser hospedado gratuitamente em:
+*   **Vercel:** Conecte seu repositório GitHub e ele detectará o Vite automaticamente.
+*   **Netlify:** Arraste a pasta `dist` ou conecte o GitHub.
